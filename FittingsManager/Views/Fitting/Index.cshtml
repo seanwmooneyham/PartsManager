@@ -1,0 +1,37 @@
+﻿@model FittingsManager.ViewModels.FittingListViewModel
+
+@{
+    ViewBag.Title = "Fittings";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Fittings</h2>
+@Html.ActionLink("New Fitting", "New", "Fitting", new { @class = "btn btn-success" })
+
+<div class="list-group">
+
+    @if (Model.Fittings.Count == 0)
+    {
+        <text>There aer no fittings available...</text>
+    }
+    else
+    {
+        <table class="table table-borderless table-hover ">
+            <thead>
+                <tr>
+                    <th><h4>Fitting Name</h4></th>
+                    <th><h4>Fitting Type</h4></th>
+                </tr>
+            </thead>
+            @foreach (var fitting in Model.Fittings)
+            {
+            <tr class="link-table-row no-text-decore" data-href="@Url.Action("Edit", new { id = fitting.Id })">
+                @*<td>@Html.ActionLink(@fitting.FittingName, "Edit", new { id = fitting.Id }, new { @class = "no-text-decore" })</td>*@
+                <td>@fitting.FittingName</td>
+                <td>@fitting.FittingType.FittingTypeName</td>
+            </tr>
+            }
+        </table>
+    }
+
+</div>

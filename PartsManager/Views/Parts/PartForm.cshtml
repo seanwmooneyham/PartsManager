@@ -1,0 +1,57 @@
+﻿@model PartsManager.ViewModels.PartFormViewModel
+@{
+    ViewBag.Title = "New Part";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>New Part</h2>
+
+
+@using (Html.BeginForm("SavePart", "Parts"))
+{
+    <div class="form-group">
+        @Html.LabelFor(p => p.PartName)
+        @Html.TextBoxFor(p => p.PartName, new { @class = "form-control" })
+        @Html.ValidationMessageFor(p => p.PartName)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(p => p.PartNumber)
+        @Html.TextBoxFor(p => p.PartNumber, new { @class = "form-control" })
+        @Html.ValidationMessageFor(p => p.PartNumber)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(p => p.ManufacturerCode)
+        @Html.TextBoxFor(p => p.ManufacturerCode, new { @class = "form-control" })
+        @Html.ValidationMessageFor(p => p.ManufacturerCode)
+    </div>
+
+
+
+    <div class="form-group">
+        @Html.LabelFor(p => p.PartTypeId)
+        @Html.DropDownListFor(p => p.PartTypeId, new SelectList(Model.PartTypes, "Id", "PartTypeName"),
+    "Select Part Type", new { @class = "form-control" })
+        @Html.ValidationMessageFor(p => p.PartTypeId)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(p => p.PartLocationId)
+        @Html.DropDownListFor(p => p.PartLocationId, new SelectList(Model.PartLocations, "Id", "LocationName"),
+    "Select Location", new { @class = "form-control" })
+        @Html.ValidationMessageFor(p => p.PartLocationId)
+    </div>
+    <!--Hidden Id property value, allows application to save data to database.-->
+    @Html.HiddenFor(p => p.Id)
+
+     <!-- AntiForgeryToken added to prevent Cross Site Request Forgery (XSRF), add attribute[] to controller-->
+    @Html.AntiForgeryToken()
+
+    <button type="submit" class="btn btn-primary">Save</button>
+}
+<!--JQuery validation script--> 
+@section scripts
+{
+    @Scripts.Render("~/bundles/jqueryval")
+}

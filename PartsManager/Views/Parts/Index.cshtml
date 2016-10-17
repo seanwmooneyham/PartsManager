@@ -1,0 +1,44 @@
+﻿@model PartsManager.ViewModels.PartListViewModel
+
+@{
+    ViewBag.Title = "Parts";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Parts</h2>
+@Html.ActionLink("New Part", "NewPart", "Parts", new { @class = "btn btn-primary" })
+<div class="list-group">
+
+    @if (Model.Parts.Count == 0)
+    {
+        <text>There aer no Parts available.</text>
+    }
+    else
+    {
+        <table class="table table-borderless table-hover">
+            <thead>
+                <tr>
+                    <th>Part</th>
+                    @*<th>Type</th>*@
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var part in Model.Parts)
+                {
+                    <tr>
+                        <td>@Html.ActionLink(@part.PartName, "Edit", new { id = part.Id }, new { @class = "list-group-item" })</td>
+                        @*<td>@part.PartType.PartTypeName</td>*@
+                    </tr>
+                }
+        
+            </tbody>
+        </table>
+        
+
+    }
+
+
+    </div>
+
+
+

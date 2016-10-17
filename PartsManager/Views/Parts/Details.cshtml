@@ -1,0 +1,58 @@
+﻿@model PartsManager.ViewModels.PartDetailsViewModel
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Part</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => Model.PartDetail.PartName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => Model.PartDetail.PartName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => Model.PartDetail.PartNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => Model.PartDetail.PartNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => Model.PartDetail.ManufacturerCode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => Model.PartDetail.ManufacturerCode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => Model.PartDetail.PartLocation)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => Model.PartDetail.PartLocation.LocationName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => Model.PartDetail.PartType)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => Model.PartDetail.PartType.PartTypeName)
+        </dd>
+
+    </dl>
+   
+</div>
+@*<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>*@
