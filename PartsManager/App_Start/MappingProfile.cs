@@ -15,8 +15,13 @@ namespace PartsManager.App_Start
             // CreateMap is a generic method that takes two parameters, <source, target>
             // when the method is called, automapper uses reflection to scan these types, finds the properties and maps them
             // based on their name.
-            // Customer Mapping
+
+            // Model to Dto mapping
             Mapper.CreateMap<Part, PartDto>();
+            Mapper.CreateMap<PartLocation, PartLocationDto>();
+            Mapper.CreateMap<PartType, PartTypeDto>();
+
+            //Dto to Model mapping
             // ignores Part.Id when mapping PartDto to Part
             Mapper.CreateMap<PartDto, Part>().ForMember(p => p.Id, opt => opt.Ignore()); ;
         }

@@ -2,7 +2,7 @@
 using PartsManager.DTOs;
 using PartsManager.Models;
 using System;
-using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -21,9 +21,14 @@ namespace PartsManager.Controllers.API
 
         // GET /api/parts/
 
-        public IEnumerable<PartDto> GetParts()
+        public IHttpActionResult GetParts()
         {
-            return _context.Parts.ToList().Select(Mapper.Map<Part, PartDto>);
+            var partsDto = _context.Parts
+                .Include(p => p.PartType)
+                .Include(p => p.PartLocation)
+                .ToList().Select(Mapper.Map<Part, PartDto>);
+
+            return Ok(partsDto);
 
         }
 
@@ -57,7 +62,7 @@ namespace PartsManager.Controllers.API
 
         // PUT api/parts/id
         [HttpPut]
-        public void UpdatePart(int id, PartDto partDto)
+        public IHttpActionResult UpdatePart(int id, PartDto partDto)
         {
             if (!ModelState.IsValid)
                 throw new HttpResponseException(HttpStatusCode.BadRequest);
@@ -70,11 +75,13 @@ namespace PartsManager.Controllers.API
             Mapper.Map(partDto, partInDb);
 
             _context.SaveChanges();
+
+            return Ok();
         }
 
         //  DELETE /api/parts/1
         [HttpDelete]
-        public void DeletePart(int id)
+        public IHttpActionResult DeletePart(int id)
         {
             var partInDb = _context.Parts.SingleOrDefault(p => p.Id == id);
 
@@ -83,6 +90,8 @@ namespace PartsManager.Controllers.API
 
             _context.Parts.Remove(partInDb);
             _context.SaveChanges();
+
+            return Ok();
 
         }
     }

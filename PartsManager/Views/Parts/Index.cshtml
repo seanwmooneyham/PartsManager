@@ -6,39 +6,85 @@
 }
 
 <h2>Parts</h2>
-@Html.ActionLink("New Part", "NewPart", "Parts", new { @class = "btn btn-primary" })
-<div class="list-group">
+@Html.ActionLink("New Part", "CreatePart", "Parts", new { @class = "btn btn-primary" })
 
-    @if (Model.Parts.Count == 0)
-    {
-        <text>There aer no Parts available.</text>
-    }
-    else
-    {
-        <table class="table table-borderless table-hover">
+        <table id="parts" class="table table-borderless table-hover">
             <thead>
                 <tr>
                     <th>Part</th>
-                    @*<th>Type</th>*@
+                    <th>Part Type</th>
+                    <th>Part Location</th>
+                    <th>Delete</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach (var part in Model.Parts)
-                {
-                    <tr>
-                        <td>@Html.ActionLink(@part.PartName, "Edit", new { id = part.Id }, new { @class = "list-group-item" })</td>
-                        @*<td>@part.PartType.PartTypeName</td>*@
-                    </tr>
-                }
-        
+               <!--Content is created using datatables below-->
             </tbody>
         </table>
+
+@section scripts
+{
+    <script>
+        // DELETE Customer
+        $(document).ready(function () {
+            // call datatable for #customers table
+           var table = $("#parts").DataTable({
+                ajax: {
+                    url: "/api/parts",
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        data: "partName",
+                        render: function(data, type, part) {
+                            return "<a href='/parts/edit/" + part.id + "'>" + part.partName + "</a>";
+                        }
+                    },
+                    {
+                        data: "partType.partTypeName"
+                    },
+                    {
+                        data: "partLocation.locationName"
+                    },
+                    {
+                        data: "id",
+                        render: function(data) {
+                            return "<button class='btn-link js-delete' data-part-id=" + data + ">Delete</button>";
+                        }
+                    }
+                ]
+            });
+            // One handler '#parts' uses filter '.js-delete' for all parts, saving memory.
+            $("#parts").on("click", ".js-delete", function () {
+                var button = $(this);
+                // bootbox dialog box
+                bootbox.confirm("Are you sure you want to delete this part from the database?", function (result) {
+                    if (result) {
+                        $.ajax({
+                            url: "/api/parts/" + button.attr("data-part-id"),
+                            method: "DELETE",
+                            success: function () {
+                                table.row(button.parents("tr")).remove().draw();
+                            }
+                        });
+                    }
+                });
+
+            })
+        });
+    </script>
+}
+
+
+
+
+
+
+
+
         
 
-    }
-
-
-    </div>
+    
 
 
 

@@ -24,9 +24,6 @@ textarea {
 }
 
 
-
-/*THIS IS A TEST FOR GITHUB*/
-
 /* Validation*/
 
 .field-validation-error {
@@ -37,3 +34,6 @@ textarea {
     border: 2px solid red;
 }
 
+#parts_wrapper {
+    margin-top: 10px;
+}

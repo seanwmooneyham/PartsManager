@@ -31,14 +31,19 @@ namespace PartsManager.DTOs
         [Display(Name = " Manufacturer Code:")]
         public string ManufacturerCode { get; set; }
 
+        public PartTypeDto PartType { get; set; }
+
 
         // PartType foreign key
         [Display(Name = " Part Type")]
         public int PartTypeId { get; set; }
 
+        public PartLocationDto PartLocation { get; set; }
+
         // PartLocation foreign key
-        [Display(Name = " Part Location")]
-        public int PartLocationId { get; set; }
+
+       // [Display(Name = " Part Location")]
+        //public int PartLocationId { get; set; }
 
         //******Commented out PartType and PartLocation so that the Data Transfer Object is not dependent on the domain model.  ************************
 
