@@ -28,6 +28,7 @@ namespace PartsManager.Controllers
         }
 
         // New part controller
+        [Authorize(Roles = RoleName.CanManageParts)]
         public ActionResult NewPart()
         {
             var PartTypes = _context.PartTypes.ToList();
@@ -41,6 +42,7 @@ namespace PartsManager.Controllers
         }
 
         // Edit part controller
+        [Authorize(Roles = RoleName.CanManageParts)]
         public ActionResult Edit(int id)
         {
             var part = _context.Parts.SingleOrDefault(c => c.Id == id);
@@ -101,17 +103,17 @@ namespace PartsManager.Controllers
         // retreive Parts model via DbContext
         // Include method is used for 'eager loading' to include the navigation property (and cooresponding class)
         {
-            var Parts = _context.Parts.Include(f => f.PartType)
-                                            .Include(f => f.PartLocation).ToList();
-                                            
-            
+           if (User.IsInRole("CanManageParts"))
+            return View();
 
-            var viewModel = new PartListViewModel()
-            {
-                Parts = Parts
-            };
+            return View("ReadOnlyIndex");
+            // code below was used before adding data table script to view.  This code was executed before the return statement.
 
-            return View(viewModel);
+            //var Parts = _context.Parts.Include(f => f.PartType).Include(f => f.PartLocation).ToList();
+            //var viewModel = new PartListViewModel()
+            //{
+            //    Parts = Parts
+            //};
         }
 
         // Part Details Controller
@@ -121,7 +123,7 @@ namespace PartsManager.Controllers
             // Include method is used for 'eager loading' to include the navigation property (and coresponding class)
             var part = _context.Parts.Include(f => f.PartLocation)
                                            .Include(f => f.PartType).SingleOrDefault(f => f.Id == id);
-            
+
 
 
             // create new PartDetailViewModel object setting the property value PartDetail to the selected part.

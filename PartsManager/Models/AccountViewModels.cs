@@ -48,10 +48,15 @@ namespace PartsManager.Models
 
     public class LoginViewModel
     {
+        [Display(Name = "User Name")]
         [Required]
-        [Display(Name = "Email")]
-        [EmailAddress]
-        public string Email { get; set; }
+        [StringLength(30, ErrorMessage = "User name must be 30 characters or less")]
+        public string UserName { get; set; }
+
+        //[Required]
+        //[Display(Name = "Email")]
+        //[EmailAddress]
+        //public string Email { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
@@ -64,10 +69,20 @@ namespace PartsManager.Models
 
     public class RegisterViewModel
     {
+        [Display(Name = "User Name")]
+        [Required]
+        [StringLength(30, ErrorMessage = "User name must be 30 characters or less")]
+        public string UserName { get; set; }
+
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }
+
+        [Required]
+        [StringLength(20, ErrorMessage = "Employee ID must be 20 characters or less.")]
+        [Display(Name = "Employee ID")]
+        public string EmployeeId { get; set; }
 
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]

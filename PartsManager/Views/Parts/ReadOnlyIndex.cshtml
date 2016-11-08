@@ -1,0 +1,68 @@
+﻿@model PartsManager.ViewModels.PartListViewModel
+
+@{
+    ViewBag.Title = "Parts";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Parts</h2>
+
+
+        <table id="parts" class="table table-borderless table-hover">
+            <thead>
+                <tr>
+                    <th>Part</th>
+                    <th>Part Type</th>
+                    <th>Part Location</th>
+                </tr>
+            </thead>
+            <tbody>
+               <!--Content is created using datatables below-->
+            </tbody>
+        </table>
+
+@section scripts
+{
+    <script>
+        // DELETE Customer
+        $(document).ready(function () {
+            // call datatable for #customers table
+           var table = $("#parts").DataTable({
+                ajax: {
+                    url: "/api/parts",
+                    dataSrc: ""
+                },
+                columns: [
+                    {
+                        data: "partName",
+                        render: function(data, type, part) {
+                            return "<a href='/parts/details/" + part.id + "'>" + part.partName + "</a>";
+                        }
+                    },
+                    {
+                        data: "partType.partTypeName"
+                    },
+                    {
+                        data: "partLocation.locationName"
+                    }
+                    
+                ]
+            });
+            
+        });
+    </script>
+}
+
+
+
+
+
+
+
+
+        
+
+    
+
+
+
