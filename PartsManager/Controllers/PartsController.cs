@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
+﻿using System.Data.Entity;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using PartsManager.Models;
 using PartsManager.ViewModels;
-using Microsoft.Owin.Security.Provider;
 
 namespace PartsManager.Controllers
 {
@@ -59,7 +55,10 @@ namespace PartsManager.Controllers
             return View("PartForm", viewModel);
         }
 
+        // SAVE part
+
         [HttpPost]
+        [Authorize(Roles = RoleName.CanManageParts)]
         [ValidateAntiForgeryToken]
         public ActionResult SavePart(Part part)
         {
@@ -100,13 +99,14 @@ namespace PartsManager.Controllers
         }
 
         public ActionResult Index()
-        // retreive Parts model via DbContext
-        // Include method is used for 'eager loading' to include the navigation property (and cooresponding class)
         {
            if (User.IsInRole("CanManageParts"))
             return View();
 
             return View("ReadOnlyIndex");
+
+            // retreive Parts model via DbContext
+            // Include method is used for 'eager loading' to include the navigation property (and cooresponding class)
             // code below was used before adding data table script to view.  This code was executed before the return statement.
 
             //var Parts = _context.Parts.Include(f => f.PartType).Include(f => f.PartLocation).ToList();
