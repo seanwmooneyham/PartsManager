@@ -1,4 +1,6 @@
-﻿@model PartsManager.ViewModels.PartFormViewModel
+﻿@using PartsManager.Migrations
+@using PartsManager.Models
+@model PartsManager.ViewModels.PartFormViewModel
 @{
     ViewBag.Title = "New Part";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -6,52 +8,86 @@
 
 <h2>New Part</h2>
 
+<div class="row">
+    @using (Html.BeginForm("SavePart", "Parts", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
 
-@using (Html.BeginForm("SavePart", "Parts"))
-{
-    <div class="form-group">
-        @Html.LabelFor(p => p.PartName)
-        @Html.TextBoxFor(p => p.PartName, new { @class = "form-control" })
-        @Html.ValidationMessageFor(p => p.PartName)
-    </div>
+        <div class="col-lg-6">
+            <div class="form-group">
+                @Html.LabelFor(p => p.PartName)
+                @Html.TextBoxFor(p => p.PartName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(p => p.PartName)
+            </div>
 
-    <div class="form-group">
-        @Html.LabelFor(p => p.PartNumber)
-        @Html.TextBoxFor(p => p.PartNumber, new { @class = "form-control" })
-        @Html.ValidationMessageFor(p => p.PartNumber)
-    </div>
+            <div class="form-group">
+                @Html.LabelFor(p => p.PartNumber)
+                @Html.TextBoxFor(p => p.PartNumber, new { @class = "form-control" })
+                @Html.ValidationMessageFor(p => p.PartNumber)
+            </div>
 
-    <div class="form-group">
-        @Html.LabelFor(p => p.ManufacturerCode)
-        @Html.TextBoxFor(p => p.ManufacturerCode, new { @class = "form-control" })
-        @Html.ValidationMessageFor(p => p.ManufacturerCode)
-    </div>
-
+            <div class="form-group">
+                @Html.LabelFor(p => p.ManufacturerCode)
+                @Html.TextBoxFor(p => p.ManufacturerCode, new { @class = "form-control" })
+                @Html.ValidationMessageFor(p => p.ManufacturerCode)
+            </div>
 
 
-    <div class="form-group">
-        @Html.LabelFor(p => p.PartTypeId)
-        @Html.DropDownListFor(p => p.PartTypeId, new SelectList(Model.PartTypes, "Id", "PartTypeName"),
-    "Select Part Type", new { @class = "form-control" })
-        @Html.ValidationMessageFor(p => p.PartTypeId)
-    </div>
 
-    <div class="form-group">
-        @Html.LabelFor(p => p.PartLocationId)
-        @Html.DropDownListFor(p => p.PartLocationId, new SelectList(Model.PartLocations, "Id", "LocationName"),
-    "Select Location", new { @class = "form-control" })
-        @Html.ValidationMessageFor(p => p.PartLocationId)
-    </div>
-    <!--Hidden Id property value, allows application to save data to database.-->
-    @Html.HiddenFor(p => p.Id)
+            <div class="form-group">
+                @Html.LabelFor(p => p.PartTypeId)
+                @Html.DropDownListFor(p => p.PartTypeId, new SelectList(Model.PartTypes, "Id", "PartTypeName"),
+                    "Select Part Type", new { @class = "form-control" })
+                @Html.ValidationMessageFor(p => p.PartTypeId)
+            </div>
 
-     <!-- AntiForgeryToken added to prevent Cross Site Request Forgery (XSRF), add attribute[] to controller-->
-    @Html.AntiForgeryToken()
+            <div class="form-group">
+                @Html.LabelFor(p => p.PartLocationId)
+                @Html.DropDownListFor(p => p.PartLocationId, new SelectList(Model.PartLocations, "Id", "LocationName"),
+                    "Select Location", new { @class = "form-control" })
+                @Html.ValidationMessageFor(p => p.PartLocationId)
+            </div>
+            <!--Hidden Id property value, allows application to save data to database.-->
+            @Html.HiddenFor(p => p.Id)
 
-    <button type="submit" class="btn btn-primary">Save</button>
-}
-<!--JQuery validation script--> 
+            <!-- AntiForgeryToken added to prevent Cross Site Request Forgery (XSRF), add attribute[] to controller-->
+            @Html.AntiForgeryToken()
+
+            <button type="submit" class="btn btn-primary">Save</button>
+        </div>
+        <div class="col-lg-6">
+            <div class="form-group">
+                <img class="img-responsive" id="part-image" alt="Image of selected module" src="~/Content/images/@Model.PartImage" />
+
+                @Html.LabelFor(p => p.PartImage)
+                @Html.TextBoxFor(p => p.PartImage, new { type = "file", Name = "file", id = "file"})
+                @Html.ValidationMessageFor(p => p.PartImage)
+            </div>
+
+        </div>
+
+    }
+   
+</div>
+
+<!--JQuery validation and image updating script-->
 @section scripts
 {
+
     @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript">
+        // Displays a preview of the selected part image.
+        function showImage(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    $('#part-image').attr('src', e.target.result);
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $("#file").change(function() {
+            showImage(this);
+        });
+    </script>
 }

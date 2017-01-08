@@ -49,5 +49,10 @@ namespace PartsManager.Models
         // Foreign key for PartLocation.cs
         [Display(Name = " Part Location")]
         public int PartLocationId { get; set; }
+
+        // Part image file name
+ 
+        [Display(Name = "File")]
+        public string PartImage { get; set; }
     }
 }

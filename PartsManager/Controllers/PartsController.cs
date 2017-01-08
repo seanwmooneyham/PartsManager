@@ -1,6 +1,11 @@
-﻿using System.Data.Entity;
+﻿using System;
+using System.Data.Entity;
+using System.IO;
 using System.Linq;
+using System.Web;
 using System.Web.Mvc;
+using System.Web.Services.Description;
+using AutoMapper;
 using PartsManager.Models;
 using PartsManager.ViewModels;
 
@@ -27,12 +32,12 @@ namespace PartsManager.Controllers
         [Authorize(Roles = RoleName.CanManageParts)]
         public ActionResult NewPart()
         {
-            var PartTypes = _context.PartTypes.ToList();
-            var PartLocations = _context.PartLocations.ToList();
+            var partTypes = _context.PartTypes.ToList();
+            var partLocations = _context.PartLocations.ToList();
             var viewModel = new PartFormViewModel()
             {
-                PartTypes = PartTypes,
-                PartLocations = PartLocations
+                PartTypes = partTypes,
+                PartLocations = partLocations
             };
             return View("PartForm", viewModel);
         }
@@ -60,7 +65,7 @@ namespace PartsManager.Controllers
         [HttpPost]
         [Authorize(Roles = RoleName.CanManageParts)]
         [ValidateAntiForgeryToken]
-        public ActionResult SavePart(Part part)
+        public ActionResult SavePart(HttpPostedFileBase file, Part part)
         {
             //If user input is not valid, user is redirected to EditPartForm or NewPartForm.
             if (!ModelState.IsValid)
@@ -74,13 +79,31 @@ namespace PartsManager.Controllers
                     return View("PartForm", viewModel);
              
             }
-            if (part.Id == 0)
+            // Add file to server.
+            if (file != null && file.ContentLength > 0)
             {
-                _context.Parts.Add(part);
+                var fileName = Path.GetFileName(file.FileName);
+
+                if (fileName == null)
+                    throw new Exception("The file does not have a file name.");
+
+                var path = Path.Combine(Server.MapPath("~/Content/images"), fileName);
+                file.SaveAs(path);
+                part.PartImage = fileName;
             }
             else
             {
-                var partInDb = _context.Parts.Single(m => m.Id == part.Id);
+                throw new Exception("Invalid file.");
+            }
+
+            if (part.Id == 0)
+            {
+                _context.Parts.Add(part);
+                
+            }
+            else
+            {
+                var partInDb = _context.Parts.Single(p => p.Id == part.Id);
 
 
                 partInDb.PartName = part.PartName;
@@ -88,9 +111,7 @@ namespace PartsManager.Controllers
                 partInDb.ManufacturerCode = part.ManufacturerCode;
                 partInDb.PartTypeId = part.PartTypeId;
                 partInDb.PartLocationId = part.PartLocationId;
-                
-                // the following line of code will work, however it will introduce security flaws
-                //TryUpdateModel(customerInDb);
+                partInDb.PartImage = Path.GetFileName(file.FileName);
 
             }
 
@@ -139,6 +160,45 @@ namespace PartsManager.Controllers
             return View(viewModel);
         }
 
-        
+        //// add file to file structure
+        //[HttpPost]
+        //[Authorize(Roles = RoleName.CanManageParts)]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult PostImage(HttpPostedFileBase file, Part part)
+        //{
+
+          
+        //    if (file != null && file.ContentLength > 0)
+        //    {
+        //        var fileName = Path.GetFileName(file.FileName);
+
+        //        if (fileName == null)
+        //            throw new Exception("The file does not have a file name.");
+
+        //        var path = Path.Combine(Server.MapPath("~/Content/images"), fileName);
+        //        file.SaveAs(path);
+        //    }
+        //    else
+        //    {
+        //            throw new Exception("File has a value of 'null'.");
+        //    }
+
+            //if (part.Id == 0)
+            //{
+               
+            //    return RedirectToAction("Index", "Parts");
+            //}
+            //else
+            //{
+            //    var partInDb = _context.Parts.Single(p => p.Id == part.Id);
+            //    partInDb.PartImage = Path.GetFileName(file.FileName);
+            //    _context.SaveChanges();
+            //}
+            
+
+            //return Redirect(Request.UrlReferrer.ToString());
+        //}
+
+
     }
 }

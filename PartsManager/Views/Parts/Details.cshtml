@@ -8,51 +8,55 @@
 <div>
     <h4>Part</h4>
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => Model.PartDetail.PartName)
-        </dt>
+    <div class="row">
+        <div class="col-lg-6">
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayNameFor(model => Model.PartDetail.PartName)
 
-        <dd>
-            @Html.DisplayFor(model => Model.PartDetail.PartName)
-        </dd>
+                </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => Model.PartDetail.PartNumber)
-        </dt>
+                <dd>
+                    @Html.DisplayFor(model => Model.PartDetail.PartName)
+                </dd>
 
-        <dd>
-            @Html.DisplayFor(model => Model.PartDetail.PartNumber)
-        </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => Model.PartDetail.PartNumber)
+                </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => Model.PartDetail.ManufacturerCode)
-        </dt>
+                <dd>
+                    @Html.DisplayFor(model => Model.PartDetail.PartNumber)
+                </dd>
 
-        <dd>
-            @Html.DisplayFor(model => Model.PartDetail.ManufacturerCode)
-        </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => Model.PartDetail.ManufacturerCode)
+                </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => Model.PartDetail.PartLocation)
-        </dt>
+                <dd>
+                    @Html.DisplayFor(model => Model.PartDetail.ManufacturerCode)
+                </dd>
 
-        <dd>
-            @Html.DisplayFor(model => Model.PartDetail.PartLocation.LocationName)
-        </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => Model.PartDetail.PartLocation)
+                </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => Model.PartDetail.PartType)
-        </dt>
+                <dd>
+                    @Html.DisplayFor(model => Model.PartDetail.PartLocation.LocationName)
+                </dd>
 
-        <dd>
-            @Html.DisplayFor(model => Model.PartDetail.PartType.PartTypeName)
-        </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => Model.PartDetail.PartType)
+                </dt>
 
-    </dl>
-   
+                <dd>
+                    @Html.DisplayFor(model => Model.PartDetail.PartType.PartTypeName)
+                </dd>
+
+            </dl>
+        </div>
+        <div class="col-lg-6">
+            <img class="img-responsive" id="image" alt="Image of selected part" src="~/Content/images/@Model.PartDetail.PartImage" />
+        </div>
+    </div>
 </div>
-@*<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>*@
+

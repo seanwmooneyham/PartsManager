@@ -24,6 +24,8 @@ namespace PartsManager.ViewModels
             ManufacturerCode = part.ManufacturerCode;
             PartLocationId = part.PartLocationId;
             PartTypeId = part.PartTypeId;
+            PartImage = part.PartImage;
+
         }
         public int Id { get; set; }
 
@@ -54,6 +56,10 @@ namespace PartsManager.ViewModels
         [Display(Name = " Part Type")]
         public int PartTypeId { get; set; }
         public IEnumerable<PartType> PartTypes { get; set; }
+
+        [Required]
+        [Display(Name = "Module Image")]
+        public string PartImage { get; set; }
 
 
     }

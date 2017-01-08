@@ -212,6 +212,10 @@
     <Compile Include="Migrations\201611080139369_AddEmployeeIdToIdentityModel.Designer.cs">
       <DependentUpon>201611080139369_AddEmployeeIdToIdentityModel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201701021608288_AddPartImagePropertyToPartModel.cs" />
+    <Compile Include="Migrations\201701021608288_AddPartImagePropertyToPartModel.Designer.cs">
+      <DependentUpon>201701021608288_AddPartImagePropertyToPartModel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Part.cs" />
@@ -468,6 +472,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\images\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -489,6 +494,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201611080139369_AddEmployeeIdToIdentityModel.resx">
       <DependentUpon>201611080139369_AddEmployeeIdToIdentityModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201701021608288_AddPartImagePropertyToPartModel.resx">
+      <DependentUpon>201701021608288_AddPartImagePropertyToPartModel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
