@@ -1,12 +1,24 @@
 ﻿@{
-    ViewBag.Title = "Ship Selection";
+    ViewBag.Title = "Home Page";
 }
-
 <div>
-    <h2>Ship Selection</h2>
+    <h1>Ship Part Manager</h1>
+    <p>
+        This <abbr title="Create, Read, Update, Delete" class="abbr">CRUD</abbr> application is used
+        to manage the parts associated with fictional spacecraft.
+    </p>
 </div>
-<div class="list-group">
-    <a href="#" class="list-group-item">Miner</a>
-    <a href="#" class="list-group-item">Fighter</a>
-    <a href="#" class="list-group-item">Explorer</a>
-</div>
+
+
+@section scripts
+{
+    <script>
+        $(document)
+            .ready(
+                bootbox.alert("This is a basic CRUD applicaiton that I have been workign on as a personal project.  Feel free to register an account to have a look at the Parts list.  " +
+                    "This will give you read only access. To edit the application, admin access is required.  " +
+                    "You can view the code on my github account under username 'seanwmooneyham'.  " +
+                    "If you have any questions feel free to email me at swmooneyham@gmail.com")
+            );
+    </script>
+}

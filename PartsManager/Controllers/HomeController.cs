@@ -14,10 +14,8 @@ namespace PartsManager.Controllers
             return View();
         }
 
-        public ActionResult About()
+        public ActionResult ShipSelect()
         {
-            ViewBag.Message = "Your application description page.";
-
             return View();
         }
 

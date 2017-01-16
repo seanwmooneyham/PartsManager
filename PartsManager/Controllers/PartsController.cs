@@ -51,16 +51,17 @@ namespace PartsManager.Controllers
             if (part == null)
                 return HttpNotFound();
 
-            var viewModel = new PartFormViewModel(part)
+            var viewModel = new EditPartFormViewModel(part)
             {
                 PartLocations = _context.PartLocations.ToList(),
-                PartTypes = _context.PartTypes.ToList()
+                PartTypes = _context.PartTypes.ToList(),
+                PartImage = part.PartImage
             };
 
-            return View("PartForm", viewModel);
+            return View("EditPartForm", viewModel);
         }
 
-        // SAVE part
+        // SAVE NEW part
 
         [HttpPost]
         [Authorize(Roles = RoleName.CanManageParts)]
@@ -70,15 +71,85 @@ namespace PartsManager.Controllers
             //If user input is not valid, user is redirected to EditPartForm or NewPartForm.
             if (!ModelState.IsValid)
             {
-               
-                    var viewModel = new PartFormViewModel
-                    {
-                        PartLocations = _context.PartLocations.ToList(),
-                        PartTypes = _context.PartTypes.ToList()
-                    };
-                    return View("PartForm", viewModel);
+                var viewModel = new PartFormViewModel
+                {
+                    PartLocations = _context.PartLocations.ToList(),
+                    PartTypes = _context.PartTypes.ToList()
+                };
+                return View("PartForm", viewModel);
              
             }
+
+            // Add file to server.
+            if (file != null && file.ContentLength > 0)
+            {
+                var fileName = Path.GetFileName(file.FileName);
+
+                if (fileName == null)
+                    throw new Exception("The file does not have a file name.");
+
+                var path = Path.Combine(Server.MapPath("~/Content/images"), fileName);
+                file.SaveAs(path);
+                part.PartImage = fileName;
+            }
+
+           // if (part.Id == 0)
+            //{
+                _context.Parts.Add(part);
+                
+           // }
+            //else
+            //{
+            //    var partInDb = _context.Parts.Single(p => p.Id == part.Id);
+
+
+            //    partInDb.PartName = part.PartName;
+            //    partInDb.PartNumber = part.PartNumber;
+            //    partInDb.ManufacturerCode = part.ManufacturerCode;
+            //    partInDb.PartTypeId = part.PartTypeId;
+            //    partInDb.PartLocationId = part.PartLocationId;
+            //    partInDb.PartImage = Path.GetFileName(file.FileName);
+
+            //}
+
+            _context.SaveChanges();
+            return RedirectToAction("Index", "Parts");
+        }
+
+
+        //////////////Save Edited Part ////////////////////////
+
+        [HttpPost]
+        [Authorize(Roles = RoleName.CanManageParts)]
+        [ValidateAntiForgeryToken]
+        public ActionResult SavePartEdit(HttpPostedFileBase file, Part part)
+        {
+            //If user input is not valid, user is redirected to EditPartForm or NewPartForm.
+            if (!ModelState.IsValid)
+            {
+                var viewModel = new PartFormViewModel
+                {
+                    PartLocations = _context.PartLocations.ToList(),
+                    PartTypes = _context.PartTypes.ToList()
+                };
+                return View("PartForm", viewModel);
+
+            }
+                var partInDb = _context.Parts.Single(p => p.Id == part.Id);
+
+                partInDb.PartName = part.PartName;
+                partInDb.PartNumber = part.PartNumber;
+                partInDb.ManufacturerCode = part.ManufacturerCode;
+                partInDb.PartTypeId = part.PartTypeId;
+                partInDb.PartLocationId = part.PartLocationId;
+            
+            _context.SaveChanges();
+            return RedirectToAction("Index", "Parts");
+        }
+
+        /////////// // Save Image ///////////////
+        public ActionResult SaveImage(HttpPostedFileBase file, Part part)
+        {
             // Add file to server.
             if (file != null && file.ContentLength > 0)
             {
@@ -93,27 +164,17 @@ namespace PartsManager.Controllers
             }
             else
             {
-                throw new Exception("Invalid file.");
+                //throw new Exception("Invalid file.");
+                ModelState.AddModelError("CustomError", "This field is required");
+                var viewModel = new PartFormViewModel
+                {
+                    PartLocations = _context.PartLocations.ToList(),
+                    PartTypes = _context.PartTypes.ToList()
+                };
+                return View("PartForm", viewModel);
             }
-
-            if (part.Id == 0)
-            {
-                _context.Parts.Add(part);
-                
-            }
-            else
-            {
-                var partInDb = _context.Parts.Single(p => p.Id == part.Id);
-
-
-                partInDb.PartName = part.PartName;
-                partInDb.PartNumber = part.PartNumber;
-                partInDb.ManufacturerCode = part.ManufacturerCode;
-                partInDb.PartTypeId = part.PartTypeId;
-                partInDb.PartLocationId = part.PartLocationId;
-                partInDb.PartImage = Path.GetFileName(file.FileName);
-
-            }
+            var partInDb = _context.Parts.Single(p => p.Id == part.Id);
+            partInDb.PartImage = Path.GetFileName(file.FileName);
 
             _context.SaveChanges();
             return RedirectToAction("Index", "Parts");
@@ -159,46 +220,6 @@ namespace PartsManager.Controllers
 
             return View(viewModel);
         }
-
-        //// add file to file structure
-        //[HttpPost]
-        //[Authorize(Roles = RoleName.CanManageParts)]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult PostImage(HttpPostedFileBase file, Part part)
-        //{
-
-          
-        //    if (file != null && file.ContentLength > 0)
-        //    {
-        //        var fileName = Path.GetFileName(file.FileName);
-
-        //        if (fileName == null)
-        //            throw new Exception("The file does not have a file name.");
-
-        //        var path = Path.Combine(Server.MapPath("~/Content/images"), fileName);
-        //        file.SaveAs(path);
-        //    }
-        //    else
-        //    {
-        //            throw new Exception("File has a value of 'null'.");
-        //    }
-
-            //if (part.Id == 0)
-            //{
-               
-            //    return RedirectToAction("Index", "Parts");
-            //}
-            //else
-            //{
-            //    var partInDb = _context.Parts.Single(p => p.Id == part.Id);
-            //    partInDb.PartImage = Path.GetFileName(file.FileName);
-            //    _context.SaveChanges();
-            //}
-            
-
-            //return Redirect(Request.UrlReferrer.ToString());
-        //}
-
 
     }
 }

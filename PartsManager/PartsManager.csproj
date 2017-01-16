@@ -226,6 +226,7 @@
     <Compile Include="Models\RoleName.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\EditPartFormViewModel.cs" />
     <Compile Include="ViewModels\PartDetailsViewModel.cs" />
     <Compile Include="ViewModels\PartFormViewModel.cs" />
     <Compile Include="ViewModels\PartListViewModel.cs" />
@@ -442,7 +443,6 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
     <Content Include="Views\Account\ConfirmEmail.cshtml" />
@@ -469,6 +469,8 @@
     <Content Include="Views\Parts\Index.cshtml" />
     <Content Include="Views\Parts\PartForm.cshtml" />
     <Content Include="Views\Parts\ReadOnlyIndex.cshtml" />
+    <Content Include="Views\Parts\EditPartForm.cshtml" />
+    <Content Include="Views\Home\ShipSelect.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

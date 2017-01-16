@@ -26,13 +26,13 @@ namespace PartsManager.Tests.Controllers
         }
 
         [TestMethod]
-        public void About()
+        public void ShipSelect()
         {
             // Arrange
             HomeController controller = new HomeController();
 
             // Act
-            ViewResult result = controller.About() as ViewResult;
+            ViewResult result = controller.ShipSelect() as ViewResult;
 
             // Assert
             Assert.AreEqual("Your application description page.", result.ViewBag.Message);

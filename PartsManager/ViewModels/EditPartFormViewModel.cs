@@ -1,23 +1,23 @@
-﻿using PartsManager.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
+using PartsManager.Models;
 
 namespace PartsManager.ViewModels
 {
-    public class PartFormViewModel
+    public class EditPartFormViewModel
     {
+
         // This constructor is used for a new part, the Id populates the hidden field in PartForm.
-        public PartFormViewModel()
+        public EditPartFormViewModel()
         {
             Id = 0;
         }
 
         // This constructor is used when a part is edited.
-        public PartFormViewModel(Part part)
+        public EditPartFormViewModel(Part part)
         {
             PartName = part.PartName;
             PartNumber = part.PartNumber;
@@ -27,6 +27,8 @@ namespace PartsManager.ViewModels
             PartImage = part.PartImage;
 
         }
+
+
         public int Id { get; set; }
 
         // Name of Part to be cataloged
@@ -57,10 +59,9 @@ namespace PartsManager.ViewModels
         public int PartTypeId { get; set; }
         public IEnumerable<PartType> PartTypes { get; set; }
 
-        [Required(ErrorMessage = "An image is required." )]
+        [Required(ErrorMessage = "An image is required.")]
         [Display(Name = "Module Image")]
         public string PartImage { get; set; }
-
 
     }
 }
