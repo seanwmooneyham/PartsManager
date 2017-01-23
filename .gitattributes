@@ -1,4 +1,4 @@
-*.rb linguist-language=C#
+*.rb linguist-language=csharp
 ###############################################################################
 # Set default behavior to automatically normalize line endings.
 ###############################################################################
