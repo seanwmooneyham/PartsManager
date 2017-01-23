@@ -25,7 +25,6 @@ namespace PartsManager.ViewModels
             PartLocationId = part.PartLocationId;
             PartTypeId = part.PartTypeId;
             PartImage = part.PartImage;
-
         }
 
 
@@ -43,7 +42,7 @@ namespace PartsManager.ViewModels
         [Display(Name = " Part Number:")]
         public string PartNumber { get; set; }
 
-        // Identifying number for part manufacturer, will always be five alpha numeric characters.
+        // Identifying number for part manufacturer.
         [Required]
         [StringLength(5)]
         [Display(Name = " Manufacturer Code:")]

@@ -25,7 +25,7 @@ namespace PartsManager.DTOs
         [Display(Name = " Part Number:")]
         public string PartNumber { get; set; }
 
-        // Identifying number for part manufacturer, will always be five alpha numeric characters.
+        // Identifying number for part manufacturer.
         [Required]
         [StringLength(5)]
         [Display(Name = " Manufacturer Code:")]
@@ -40,6 +40,11 @@ namespace PartsManager.DTOs
 
         public PartLocationDto PartLocation { get; set; }
 
+        // TO DO
+        // Add PartImage
+        // END TO DO
+
+
         // PartLocation foreign key
 
        // [Display(Name = " Part Location")]
@@ -50,9 +55,7 @@ namespace PartsManager.DTOs
         // Navigation Property (PartType.cs)
         //[Display(Name = " Part Type:")]
         //public PartType PartType { get; set; }
-
-       
-
+        
 
         //Navigation Property (PartLocation)
         //[Display(Name = " Part Location:")]

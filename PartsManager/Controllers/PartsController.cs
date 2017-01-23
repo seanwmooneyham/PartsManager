@@ -4,8 +4,6 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using System.Web.Services.Description;
-using AutoMapper;
 using PartsManager.Models;
 using PartsManager.ViewModels;
 
@@ -40,7 +38,7 @@ namespace PartsManager.Controllers
                 PartLocations = partLocations
             };
             return View("PartForm", viewModel);
-        }
+        } // END NewPart
 
         // Edit part controller
         [Authorize(Roles = RoleName.CanManageParts)]
@@ -59,10 +57,9 @@ namespace PartsManager.Controllers
             };
 
             return View("EditPartForm", viewModel);
-        }
+        } // END Edit
 
         // SAVE NEW part
-
         [HttpPost]
         [Authorize(Roles = RoleName.CanManageParts)]
         [ValidateAntiForgeryToken]
@@ -93,32 +90,16 @@ namespace PartsManager.Controllers
                 part.PartImage = fileName;
             }
 
-           // if (part.Id == 0)
-            //{
+          
                 _context.Parts.Add(part);
-                
-           // }
-            //else
-            //{
-            //    var partInDb = _context.Parts.Single(p => p.Id == part.Id);
-
-
-            //    partInDb.PartName = part.PartName;
-            //    partInDb.PartNumber = part.PartNumber;
-            //    partInDb.ManufacturerCode = part.ManufacturerCode;
-            //    partInDb.PartTypeId = part.PartTypeId;
-            //    partInDb.PartLocationId = part.PartLocationId;
-            //    partInDb.PartImage = Path.GetFileName(file.FileName);
-
-            //}
+          
 
             _context.SaveChanges();
             return RedirectToAction("Index", "Parts");
-        }
+        } // END SavePart
 
 
         //////////////Save Edited Part ////////////////////////
-
         [HttpPost]
         [Authorize(Roles = RoleName.CanManageParts)]
         [ValidateAntiForgeryToken]
@@ -145,7 +126,7 @@ namespace PartsManager.Controllers
             
             _context.SaveChanges();
             return RedirectToAction("Index", "Parts");
-        }
+        } // END SavePartEdit
 
         /////////// // Save Image ///////////////
         public ActionResult SaveImage(HttpPostedFileBase file, Part part)
@@ -178,7 +159,7 @@ namespace PartsManager.Controllers
 
             _context.SaveChanges();
             return RedirectToAction("Index", "Parts");
-        }
+        }  // END SaveImage
 
         public ActionResult Index()
         {
@@ -190,24 +171,22 @@ namespace PartsManager.Controllers
             // retreive Parts model via DbContext
             // Include method is used for 'eager loading' to include the navigation property (and cooresponding class)
             // code below was used before adding data table script to view.  This code was executed before the return statement.
-
-            //var Parts = _context.Parts.Include(f => f.PartType).Include(f => f.PartLocation).ToList();
+            //var Parts = _context.Parts.Include(p => p.PartType).Include(p => p.PartLocation).ToList();
             //var viewModel = new PartListViewModel()
             //{
             //    Parts = Parts
             //};
-        }
+        } // END Index
+
 
         // Part Details Controller
         public ActionResult Details(int id)
         {
             // retreive Parts model via DbContext
             // Include method is used for 'eager loading' to include the navigation property (and coresponding class)
-            var part = _context.Parts.Include(f => f.PartLocation)
-                                           .Include(f => f.PartType).SingleOrDefault(f => f.Id == id);
-
-
-
+            var part = _context.Parts.Include(p => p.PartLocation)
+                                           .Include(p => p.PartType).SingleOrDefault(p => p.Id == id);
+            
             // create new PartDetailViewModel object setting the property value PartDetail to the selected part.
             var viewModel = new PartDetailsViewModel()
             {
@@ -219,7 +198,7 @@ namespace PartsManager.Controllers
                 return Content("No part details have been found.");
 
             return View(viewModel);
-        }
+        } // END Details
 
     }
 }

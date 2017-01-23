@@ -230,7 +230,6 @@
     <Compile Include="ViewModels\PartDetailsViewModel.cs" />
     <Compile Include="ViewModels\PartFormViewModel.cs" />
     <Compile Include="ViewModels\PartListViewModel.cs" />
-    <Compile Include="ViewModels\part.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-darkly.css" />
@@ -353,6 +352,7 @@
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Content\DataTables\css\mixins.scss" />
     <Content Include="Content\DataTables\css\common.scss" />
+    <None Include="Properties\PublishProfiles\ModuleManager - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\DataTables\autoFill.bootstrap.js" />
     <Content Include="Scripts\DataTables\autoFill.bootstrap.min.js" />

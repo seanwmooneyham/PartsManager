@@ -27,7 +27,7 @@ namespace PartsManager.Models
         [Display(Name = " Part Number:")]
         public string PartNumber { get; set; }
 
-        // Identifying number for part manufacturer, will always be five alpha numeric characters.
+        // Identifying number for part manufacturer.
         [Required]
         [StringLength(5)]
         [Display(Name = " Manufacturer Code:")]

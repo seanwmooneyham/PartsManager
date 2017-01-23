@@ -44,7 +44,7 @@ namespace PartsManager.Controllers.API
         }
 
         // POST /api/parts
-     //   [Authorize(Roles = RoleName.CanManageParts)]
+        [Authorize(Roles = RoleName.CanManageParts)]
         [HttpPost]
         public IHttpActionResult CreatePart(PartDto partDto)
         {
@@ -62,7 +62,7 @@ namespace PartsManager.Controllers.API
 
 
         // PUT api/parts/id
-       // [Authorize(Roles = RoleName.CanManageParts)]
+        [Authorize(Roles = RoleName.CanManageParts)]
         [HttpPut]
         public IHttpActionResult UpdatePart(int id, PartDto partDto)
         {
@@ -82,7 +82,7 @@ namespace PartsManager.Controllers.API
         }
 
         //  DELETE /api/parts/1
-     //   [Authorize(Roles = RoleName.CanManageParts)]
+        [Authorize(Roles = RoleName.CanManageParts)]
         [HttpDelete]
         public IHttpActionResult DeletePart(int id)
         {
